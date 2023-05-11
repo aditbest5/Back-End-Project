@@ -26,7 +26,7 @@ module.exports = {
       commentId: {
         type: Sequelize.INTEGER,
         references: {
-          model: "post_comments",
+          model: "comments",
           key: "id",
         },
       },

@@ -9,7 +9,7 @@ module.exports = {
      * Example:
      * await queryInterface.createTable('users', { id: Sequelize.INTEGER });
      */
-    await queryInterface.createTable("post_comments", {
+    await queryInterface.createTable("comments", {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -34,9 +34,6 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING,
       },
-      comment_likes: {
-        type: Sequelize.INTEGER,
-      },
       createdAt: {
         type: Sequelize.DATE,
       },
@@ -53,5 +50,6 @@ module.exports = {
      * Example:
      * await queryInterface.dropTable('users');
      */
+    await queryInterface.dropTable("comments");
   },
 };

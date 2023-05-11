@@ -28,7 +28,6 @@ module.exports = {
         type: Sequelize.STRING,
       },
       biodata: {
-        allowNull: false,
         type: Sequelize.STRING,
       },
       profile_picture: {
