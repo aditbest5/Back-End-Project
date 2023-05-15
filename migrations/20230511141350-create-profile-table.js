@@ -24,7 +24,6 @@ module.exports = {
         },
       },
       fullname: {
-        allowNull: false,
         type: Sequelize.STRING,
       },
       biodata: {

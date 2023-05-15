@@ -10,7 +10,6 @@ module.exports = (sequelize, DataTypes) => {
       },
       fullname: {
         type: DataTypes.STRING,
-        allowNull: false,
       },
       biodata: {
         type: DataTypes.STRING,

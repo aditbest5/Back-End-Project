@@ -4,6 +4,7 @@ const Token = db.Token;
 const transporter = require("../lib/emailer");
 const { createToken } = require("../lib/createToken");
 const bcrypt = require("bcryptjs");
+const { Op } = require("sequelize");
 const jwt = require("jsonwebtoken");
 
 const AuthController = {
@@ -15,24 +16,37 @@ const AuthController = {
       const isEmailExist = await User.findOne({
         where: { email },
       });
+      const isUsernameExist = await User.findOne({
+        where: { username },
+      });
       if (isEmailExist) {
         return res.status(409).json({
           message: "Email already exist!",
+        });
+      } else if (isUsernameExist) {
+        return res.status(409).json({
+          message: "Username already exist!",
         });
       }
       function validatePassword(password) {
         const regex = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
         return regex.test(password);
       }
+      // if(minimumPassword(password)){
+      //   return res.status(409).json({
+      //     message:
+      //       "Password setidaknya terdiri dari huruf besar, simbol, dan angka",
+      //   });
+      // }
       if (!validatePassword(password)) {
         return res.status(409).json({
           message:
-            "Password setidaknya terdiri dari huruf besar, simbol, dan angka",
+            "Password setidaknya terdiri dari huruf besar, simbol, angka, dan minimum 8 karakter",
         });
       }
       if (password !== confirmPassword) {
         return res.status(409).json({
-          message: "Password must be same",
+          message: "Password harus sama",
         });
       }
       const salt = await bcrypt.genSalt(10);
@@ -112,17 +126,23 @@ const AuthController = {
         .send({ message: "Verified Account", success: true });
     } catch (err) {
       console.log(err);
-      res.status(500).send(err);
+      return res.status(err.statusCode || 500).json({
+        message: err.message,
+      });
     }
   },
   login: async (req, res) => {
     try {
-      const { email, password } = req.body;
+      const { emailUsername, password } = req.body;
 
-      const checkEmail = await User.findOne({ where: { email } });
+      const checkEmail = await User.findOne({
+        where: {
+          [Op.or]: [{ email: emailUsername }, { username: emailUsername }],
+        },
+      });
       if (!checkEmail) {
         return res.status(409).json({
-          message: "No Email Found!",
+          message: "No Email or Username Found!",
         });
       }
       //   if (checkEmail.status === "unverified") {
@@ -141,6 +161,7 @@ const AuthController = {
         id: checkEmail.id,
         email: checkEmail.email,
         username: checkEmail.username,
+        status: checkEmail.status,
       };
       const token = createToken(payload);
       return res.status(200).json({
@@ -163,7 +184,7 @@ const AuthController = {
         isAdmin: false,
         status: "unverified",
       });
-      await Token.update({ token: token }, { where: { id: req.user.id } });
+      await Token.update({ token: token }, { where: { userId: req.user.id } });
       await transporter.sendMail(
         {
           from: `Admin <aditbest5@gmail.com>`,
