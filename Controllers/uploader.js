@@ -8,7 +8,7 @@ const bcrypt = require("bcryptjs");
 const UploaderController = {
   uploadFile: async (req, res) => {
     try {
-      let path = `/${req.user.email}`;
+      let path = `/profile/${req.user.email}`;
       const upload = uploader(path, "IMG").fields([{ name: "file" }]); // parameter pertama pathnya dan parameter kedua prefixnya
       upload(req, res, async (err) => {
         if (err) {
