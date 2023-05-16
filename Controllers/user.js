@@ -46,6 +46,7 @@ const UserController = {
       const isUsernameExist = await User.findOne({
         where: { username },
       });
+      console.log(username, userName);
       if (username === userName) {
         await User.update({ username }, { where: { id } });
         await Profile.update({ fullname, biodata }, { where: { userId: id } });
@@ -55,6 +56,12 @@ const UserController = {
       } else if (isUsernameExist) {
         return res.status(409).json({
           message: "Username Already Exist!",
+        });
+      } else {
+        await User.update({ username }, { where: { id } });
+        await Profile.update({ fullname, biodata }, { where: { userId: id } });
+        return res.status(200).json({
+          message: "Update Profile Success",
         });
       }
     } catch (err) {
