@@ -3,7 +3,7 @@ const express = require("express");
 const cors = require("cors");
 const app = express();
 
-const port = 2000;
+const port = 5000;
 const {
   authRoutes,
   userRoutes,
