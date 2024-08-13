@@ -151,7 +151,7 @@ const UserController = {
           from: `Admin <aditbest5@gmail.com>`,
           to: `${user.email}`,
           subject: "Reset Password",
-          html: `<h1>Hello ${user.email}, please reset your account <a href='http://localhost:3000/reset-password/${token}'>here</a></h1>`,
+          html: `<h1>Hello ${user.email}, please reset your account <a href='https://sosmed.project-adit.my.id/reset-password/${token}'>here</a></h1>`,
         },
         (errMail, resMail) => {
           if (errMail) {
