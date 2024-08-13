@@ -1,23 +1,23 @@
 {
   "development": {
-    "username": "root",
-    "password": "0215464580An@",
-    "database": "mini_project",
-    "host": "127.0.0.1",
+    "username": "admin",
+    "password": "0215464580An#",
+    "database": "sosmed",
+    "host": "103.196.153.68",
     "dialect": "mysql"
   },
   "test": {
-    "username": "root",
-    "password": null,
+    "username": "admin",
+    "password": "0215464580An#",
     "database": "database_test",
-    "host": "127.0.0.1",
+    "host": "103.196.153.68",
     "dialect": "mysql"
   },
   "production": {
-    "username": "root",
-    "password": null,
-    "database": "database_production",
-    "host": "127.0.0.1",
+    "username": "admin",
+    "password": "0215464580An#",
+    "database": "sosmed",
+    "host": "103.196.153.68",
     "dialect": "mysql"
   }
 }
